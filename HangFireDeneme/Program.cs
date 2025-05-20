@@ -12,8 +12,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Hangfire servisini ekle (Hafizada Tut...)
+/*
 builder.Services.AddHangfire(config =>
-    config.UseMemoryStorage());
+    config.UseMemoryStorage()); 
+*/
+
+var connectionString = builder.Configuration.GetConnectionString("HangfireConnection");
+builder.Services.AddHangfire(config =>
+{
+    config.UseSqlServerStorage(connectionString);
+});
+
 
 // Bu sekilde tanimlandıginda level siralamasi olmaz...
 // builder.Services.AddHangfireServer();
